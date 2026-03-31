@@ -82,14 +82,9 @@
       <div class="a4-wrapper">
         <div class="a4-page" id="pdfDocument">
           
-          <!-- Grafismo Topo (SVG com cores sólidas - evita bugs do HTML2Canvas) -->
+          <!-- Grafismo Topo (Original com Opacidade via Base64 para suportar HTML2Canvas perfeitamente) -->
           <div class="waves-top">
-            <svg viewBox="0 0 800 200" preserveAspectRatio="none" style="width: 100%; height: 100%; display: block;">
-              <path d="M800,0 C700,50 650,40 500,80 C300,140 100,50 0,90 L0,0 Z" fill="#F0ECE8"/>
-              <path d="M0,100 Q200,40 400,90 T800,70 L800,0 L0,0 Z" fill="#D6B69C"/>
-              <path d="M0,80 Q200,10 400,60 T800,40 L800,0 L0,0 Z" fill="#E3CEBC"/>
-              <path d="M0,0 L800,0 L800,30 Q400,80 0,60 Z" fill="#F4EDE6"/>
-            </svg>
+            <img style="width: 100%; height: 100%; display: block;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj4KPHBhdGggZD0iTTAsODAgUTIwMCwxMCA0MDAsNjAgVDgwMCw0MCBMODAwLDAgTDAsMCBaIiBmaWxsPSIjYjE4NzY0IiBvcGFjaXR5PSIwLjYiLz4KPHBhdGggZD0iTTAsMTAwIFEyMDAsNDAgNDAwLDkwIFQ4MDAsNzAgTDgwMCwwIEwwLDAgWiIgZmlsbD0iIzk5NzA1MCIgb3BhY2l0eT0iMC43Ii8+CjxwYXRoIGQ9Ik0wLDAgTDgwMCwwIEw4MDAsMzAgUTQwMCw4MCAwLDYwIFoiIGZpbGw9IiNGRkYiIG9wYWNpdHk9IjAuNCIvPgo8cGF0aCBkPSJNODAwLDAgQzcwMCw1MCA2NTAsNDAgNTAwLDgwIEMzMDAsMTQwIDEwMCw1MCAwLDkwIEwwLDAgWiIgZmlsbD0iIzU4NDgzYiIgb3BhY2l0eT0iMC4xIi8+Cjwvc3ZnPg==" alt=""/>
           </div>
 
           <div class="invoice-content">
@@ -166,13 +161,9 @@
             </div>
           </div>
 
-          <!-- Grafismo Base (SVG com cores sólidas) -->
+          <!-- Grafismo Base (Original com Opacidade via Base64 para suportar HTML2Canvas perfeitamente) -->
           <div class="waves-bottom">
-            <svg viewBox="0 0 800 150" preserveAspectRatio="none" style="width: 100%; height: 100%; display: block;">
-              <path d="M0,50 Q200,10 400,60 T800,40 L800,150 L0,150 Z" fill="#F0ECE8"/>
-              <path d="M0,80 Q200,30 400,100 T800,50 L800,150 L0,150 Z" fill="#E3CEBC"/>
-              <path d="M0,110 C300,30 500,140 800,90 L800,150 L0,150 Z" fill="#D6B69C"/>
-            </svg>
+            <img style="width: 100%; height: 100%; display: block;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMTUwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj4KPHBhdGggZD0iTTAsNTAgUTIwMCwxMCA0MDAsNjAgVDgwMCw0MCBMODAwLDE1MCBMMCwxNTAgWiIgZmlsbD0iIzY3NWE1MCIgb3BhY2l0eT0iMC45Ii8+CjxwYXRoIGQ9Ik0wLDgwIFEyMDAsMzAgNDAwLDEwMCBUODAwLDUwIEw4MDAsMTUwIEwwLDE1MCBaIiBmaWxsPSIjYTQ3YzU5IiBvcGFjaXR5PSIwLjciLz4KPHBhdGggZD0iTTAsMTEwIEMzMDAsMzAgNTAwLDE0MCA4MDAsOTAgTDgwMCwxNTAgTDAsMTUwIFoiIGZpbGw9IiM1YzUzNGMiIG9wYWNpdHk9IjAuOSIvPgo8L3N2Zz4=" alt=""/>
           </div>
 
         </div>
