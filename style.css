@@ -190,7 +190,7 @@ body {
 }
 .a4-page {
   width: 794px; /* Dimensões padrão A4 em 96 DPI */
-  min-height: 1123px; /* Pelo menos uma folha A4 */
+  min-height: 1120px; /* Pelo menos uma folha A4 (Ajustado para evitar página extra nula) */
   height: auto;
   background-color: #fff;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -199,25 +199,56 @@ body {
   font-size: 16px; 
 }
 
-/* Background Gradients */
+/* Background Gradients (Shapes CSS Puros para Suporte Nativo do HTML2Canvas) */
 .waves-top {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 200px;
+  top: 0; left: 0; width: 100%; height: 200px;
+  overflow: hidden;
   z-index: 1;
 }
-.waves-top svg { width: 100%; height: 100%; display: block; }
+.css-shape-top-1 {
+  position: absolute;
+  top: -150px; left: -100px; width: 1000px; height: 350px;
+  background: rgba(185, 142, 104, 0.4);
+  border-radius: 50%;
+}
+.css-shape-top-2 {
+  position: absolute;
+  top: -120px; left: -50px; width: 900px; height: 300px;
+  background: rgba(153, 112, 80, 0.6);
+  border-radius: 50%;
+}
+.css-shape-top-3 {
+  position: absolute;
+  top: -160px; left: 150px; width: 700px; height: 250px;
+  background: rgba(92, 79, 68, 0.1);
+  border-radius: 50%;
+}
+
 .waves-bottom {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 150px;
+  bottom: 0; left: 0; width: 100%; height: 150px;
+  overflow: hidden;
   z-index: 1;
 }
-.waves-bottom svg { width: 100%; height: 100%; display: block; }
+.css-shape-bottom-1 {
+  position: absolute;
+  bottom: -150px; left: -100px; width: 1000px; height: 300px;
+  background: rgba(92, 79, 68, 0.1);
+  border-radius: 50%;
+}
+.css-shape-bottom-2 {
+  position: absolute;
+  bottom: -100px; left: -50px; width: 900px; height: 200px;
+  background: rgba(185, 142, 104, 0.4);
+  border-radius: 50%;
+}
+.css-shape-bottom-3 {
+  position: absolute;
+  bottom: -120px; left: 150px; width: 700px; height: 200px;
+  background: rgba(153, 112, 80, 0.6);
+  border-radius: 50%;
+}
 
 /* Constrainer do conteúdo principal do PDF */
 .invoice-content {
