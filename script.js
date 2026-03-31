@@ -170,7 +170,7 @@ function generatePDF() {
     margin:       0,
     filename:     `Orcamento_${document.getElementById('inputClient').value.trim().replace(/\s+/g,'_')}.pdf`,
     image:        { type: 'jpeg', quality: 1.0 },
-    html2canvas:  { scale: 4, useCORS: true, allowTaint: true, letterRendering: true, scrollY: 0 },
+    html2canvas:  { scale: 4, useCORS: true, allowTaint: true, letterRendering: true, scrollY: 0, windowWidth: 794 },
     jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' },
     pagebreak:    { mode: ['css', 'legacy'], avoid: 'tr' }
   };
