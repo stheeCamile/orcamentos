@@ -165,13 +165,18 @@ function generatePDF() {
 
   const element = document.getElementById('pdfDocument');
   
-  // Opções para garantir qualidade A4 sem cortes em múltiplas páginas
+  // Forçar largura exata para evitar que iOS/Mobile engula um pedaço do PDF e cause distorção
+  element.style.width = '794px';
+  element.style.minWidth = '794px';
+  element.style.maxWidth = '794px';
+
+  // Opções de alta fidelidade
   const opt = {
     margin:       0,
     filename:     `Orcamento_${document.getElementById('inputClient').value.trim().replace(/\s+/g,'_')}.pdf`,
-    image:        { type: 'jpeg', quality: 1.0 },
-    html2canvas:  { scale: 4, useCORS: true, allowTaint: true, letterRendering: true, scrollY: 0, windowWidth: 794 },
-    jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' },
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2, useCORS: true, allowTaint: true, letterRendering: true, scrollY: 0 },
+    jsPDF:        { unit: 'px', format: [794, 1123], orientation: 'portrait' },
     pagebreak:    { mode: ['css', 'legacy'], avoid: 'tr' }
   };
 
