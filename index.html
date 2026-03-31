@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Orçamentos - Claudio Móveis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  
+  <div class="app-layout">
+    
+    <!-- Painel de Formulário (Esquerda) -->
+    <aside class="sidebar-form">
+      <div class="brand">
+        <h2>Painel de Orçamentos</h2>
+        <p>Preencha os dados e gere o PDF</p>
+      </div>
+
+      <form id="invoiceForm">
+        
+        <div class="form-group">
+          <label>Data</label>
+          <input type="text" id="inputDate" placeholder="Ex: 12/03/2026">
+        </div>
+
+        <div class="form-group">
+          <label>Cliente</label>
+          <input type="text" id="inputClient" placeholder="Nome do Cliente" value="Instituto Ama">
+        </div>
+
+        <div class="items-section">
+          <h3>Itens do Orçamento</h3>
+          <div id="itemsContainer">
+            <!-- Items added via JS -->
+          </div>
+          <button type="button" class="btn-outline" onclick="addItem()">+ Adicionar Item</button>
+        </div>
+
+        <div class="form-group">
+          <label>Custo Total Automático?</label>
+          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <label style="font-weight: normal; font-size: 14px; cursor: pointer;"> <input type="radio" name="calcType" value="auto" checked onchange="toggleManualTotal()"> Sim (Soma os itens)</label>
+            <label style="font-weight: normal; font-size: 14px; cursor: pointer;"> <input type="radio" name="calcType" value="manual" onchange="toggleManualTotal()"> Não (Preencher manual)</label>
+          </div>
+          <input type="text" id="inputTotal" placeholder="R$ 0,00" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Forma de Pagamento</label>
+          <input type="text" id="inputPayment" value="40% de entrada e saldo na entrega">
+        </div>
+
+        <div class="form-group">
+          <label>Prazo de Entrega</label>
+          <input type="text" id="inputDeadline" value="Á combinar">
+        </div>
+
+        <div class="form-group">
+          <label>Observações (Opcional)</label>
+          <textarea id="inputObs" rows="3" placeholder="Ex: Caso necessário, digite a observação aqui..."></textarea>
+        </div>
+
+      </form>
+
+    </aside>
+
+    <!-- Visualizador e Download (Direita) -->
+    <main class="preview-area">
+      <header class="preview-header">
+        <button id="btnGenerarPDF" class="btn-primary" onclick="generatePDF()">
+          <svg style="width: 18px; fill: white; margin-right: 8px;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          BAIXAR PDF (Pronto para enviar)
+        </button>
+      </header>
+      
+      <!-- Papel A4 -->
+      <div class="a4-wrapper">
+        <div class="a4-page" id="pdfDocument">
+          
+          <!-- Grafismo Topo -->
+          <div class="waves-top">
+            <svg viewBox="0 0 800 200" preserveAspectRatio="none">
+              <!-- Ondas em tons ajustados e mais fiéis -->
+              <path d="M0,80 Q200,10 400,60 T800,40 L800,0 L0,0 Z" fill="#b98e68" opacity="0.4"/>
+              <path d="M0,100 Q200,40 400,90 T800,70 L800,0 L0,0 Z" fill="#997050" opacity="0.6"/>
+              <path d="M0,0 L800,0 L800,30 Q400,80 0,60 Z" fill="#FFF" opacity="0.4"/>
+              <path d="M800,0 C700,50 650,40 500,80 C300,140 100,50 0,90 L0,0 Z" fill="#5c4f44" opacity="0.1"/>
+            </svg>
+          </div>
+
+          <div class="invoice-content">
+            <!-- Cabeçalho -->
+            <div class="doc-header">
+              <div class="doc-title-box">
+                <h1 class="color-primary header-orcamento">ORÇAMENTO</h1>
+                <p class="color-primary bold header-date">Data: <span id="outDate">12/03/2026</span></p>
+              </div>
+              <div class="doc-logo-box">
+                <img src="logo.png" style="width: 200px; max-height: 120px; object-fit: contain;">
+              </div>
+            </div>
+
+            <!-- Infos de Contato -->
+            <div class="doc-infos">
+              <div class="box-empresa">
+                <h3 class="color-primary">CLAUDIO MÓVEIS</h3>
+                <p>CNPJ: 59.838.116/0001-47</p>
+                <p>(41) 99653-2327</p>
+                <p>Rua Fernando Pessoa, 39 -<br>Vargem Grande</p>
+                <p>@claudiomarcenaria_</p>
+              </div>
+              <div class="box-cliente">
+                <h3 class="color-primary">CLIENTE:</h3>
+                <p class="t-large" id="outClient">Instituto Ama</p>
+              </div>
+            </div>
+
+            <!-- Tabela -->
+            <div class="doc-table-wrap">
+              <table class="doc-table" id="outTable">
+                <thead>
+                  <tr>
+                    <th width="33%" class="bg-primary color-white">SERVIÇO/ITEM</th>
+                    <th width="44%" class="bg-primary color-white">DESCRIÇÃO</th>
+                    <th width="23%" class="bg-primary color-white">VALOR</th>
+                  </tr>
+                </thead>
+                <tbody id="outTableBody">
+                  <!-- Rows injected dynamic -->
+                </tbody>
+              </table>
+
+              <!-- Total box -->
+              <div class="total-box">
+                <div class="total-bar">
+                  CUSTO TOTAL: <span id="outTotal">R$ 32.200,00</span>
+                </div>
+              </div>
+
+              <!-- Obs Box (Aparece apenas quando preenchido) -->
+              <div id="outObsContainer" style="display: none; justify-content: flex-end; margin-top: 15px;">
+                <div style="background-color: #f7f7f7; border-left: 4px solid var(--primary-color); padding: 12px; max-width: 60%; font-size: 14px; text-align: left; color: #555;">
+                  <strong>OBS:</strong> <span id="outObs"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer terms -->
+            <div class="doc-terms">
+              <div class="term-block">
+                <h4>FORMA DE PAGAMENTO</h4>
+                <p id="outPayment">40% de entrada e saldo na entrega</p>
+              </div>
+              <div class="term-block">
+                <h4>PRAZO DE ENTREGA</h4>
+                <p id="outDeadline">60 dias</p>
+              </div>
+              <div class="term-block" style="margin-top:20px;">
+                <h4>TERMOS E CONDIÇÕES</h4>
+                <p>Este orçamento é válido por 30 dias.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grafismo Base -->
+          <div class="waves-bottom">
+            <svg viewBox="0 0 800 150" preserveAspectRatio="none">
+              <path d="M0,50 Q200,10 400,60 T800,40 L800,150 L0,150 Z" fill="#5c4f44" opacity="0.1"/>
+              <path d="M0,80 Q200,30 400,100 T800,50 L800,150 L0,150 Z" fill="#b98e68" opacity="0.4"/>
+              <path d="M0,110 C300,30 500,140 800,90 L800,150 L0,150 Z" fill="#997050" opacity="0.6"/>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

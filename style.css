@@ -1,0 +1,397 @@
+:root {
+  --primary-color: #b18961;
+  --primary-dark: #997050;
+  --text-dark: #333;
+  --text-light: #666;
+  --bg-color: #f4f4f9;
+  --border-color: #ddd;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: row;
+}
+
+@media (max-width: 1024px) {
+  .app-layout {
+    flex-direction: column;
+  }
+  .sidebar-form {
+    width: 100% !important;
+  }
+}
+
+/* Formulário (Esquerda) */
+.sidebar-form {
+  width: 550px;
+  background-color: #fff;
+  padding: 30px;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+  z-index: 10;
+}
+
+.brand h2 {
+  font-size: 24px;
+  color: var(--primary-dark);
+  margin-bottom: 5px;
+}
+.brand p {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #555;
+}
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 15px;
+  transition: 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 15px;
+  transition: 0.2s;
+  resize: vertical;
+}
+.form-group input[readonly] {
+  background-color: #f9f9f9;
+  color: #777;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-outline {
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px dashed var(--primary-color);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.btn-outline:hover {
+  background-color: rgba(186, 142, 102, 0.1);
+}
+
+.items-section {
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+}
+.items-section h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.item-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.item-row input.desc-input {
+  flex: 2;
+}
+.item-row input.val-input {
+  flex: 1;
+}
+.btn-del {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  width: 35px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Área de Visualização (Direita) */
+.preview-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #e5e5e5;
+  align-items: center;
+  position: relative;
+  overflow-x: auto;
+  padding-bottom: 50px;
+}
+
+.preview-header {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 100;
+}
+.preview-header .btn-primary {
+  width: auto;
+  padding: 12px 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* O Documento A4 */
+.a4-wrapper {
+  padding: 40px 0;
+  margin: auto;
+}
+.a4-page {
+  width: 794px; /* Dimensões padrão A4 em 96 DPI */
+  min-height: 1123px; /* Pelo menos uma folha A4 */
+  height: auto;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  position: relative;
+  /* Fonte base para o PDF */
+  font-size: 16px; 
+}
+
+/* Background Gradients */
+.waves-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  z-index: 1;
+}
+.waves-top svg { width: 100%; height: 100%; display: block; }
+.waves-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  z-index: 1;
+}
+.waves-bottom svg { width: 100%; height: 100%; display: block; }
+
+/* Constrainer do conteúdo principal do PDF */
+.invoice-content {
+  position: relative;
+  z-index: 10;
+  padding: 100px 60px 40px 60px; /* Margem interna da folha */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Helpers de Cor e SVG */
+.color-primary { color: var(--primary-color); }
+.bg-primary { background-color: var(--primary-color); }
+.color-white { color: #fff; }
+.bold { font-weight: 700; }
+
+/* Cabeçalho do Orçamento */
+.doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+.doc-title-box {
+  margin-top: 30px;
+}
+.header-orcamento {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.header-date {
+  font-size: 18px;
+  margin-top: 5px;
+}
+.doc-logo-box {
+  text-align: center;
+}
+.logo-icon {
+  width: 120px;
+  margin: 0 auto;
+}
+.logo-name {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-top: 5px;
+}
+.logo-sub {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Infos - Empresa e Cliente */
+.doc-infos {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+.box-empresa { width: 45%; }
+.box-empresa h3 { font-size: 18px; margin-bottom: 10px; letter-spacing: 0.5px; }
+.box-empresa p { margin-bottom: 4px; font-size: 14px; color: #444; }
+
+.box-cliente { width: 45%; }
+.box-cliente h3 { font-size: 18px; margin-bottom: 15px; letter-spacing: 0.5px; }
+.t-large { font-size: 20px; color: #333; }
+
+/* Tabela de Itens */
+.doc-table-wrap {
+  margin-bottom: 40px;
+}
+table.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.doc-table th {
+  padding: 14px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  border-right: 1px solid #fff;
+}
+table.doc-table th:last-child {
+  border-right: none;
+}
+table.doc-table td {
+  padding: 16px 14px;
+  border: 1px solid #f0f0f0;
+  color: #333;
+  font-size: 15px;
+  vertical-align: middle;
+}
+/* Estilo da primeira coluna (Serviço) fixada */
+table.doc-table td:first-child {
+  font-size: 16px;
+}
+table.doc-table td:last-child {
+  text-align: center;
+}
+
+/* Custo Total */
+.total-box {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px; /* afastando da tabela */
+}
+.total-bar {
+  background-color: var(--primary-dark);
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Termos e Condições (Footer Content) */
+.doc-terms {
+  margin-top: 30px; /* mais próximo aos itens acima */
+  padding-bottom: 160px; /* Espaço para não encavalar no grafismo inferior na última página */
+}
+.term-block {
+  margin-bottom: 12px;
+}
+.term-block h4 {
+  color: #5d6776; /* Um subtom no modelo */
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.term-block p {
+  font-size: 15px;
+  color: #333;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 1024px) {
+  .app-layout {
+    flex-direction: column;
+  }
+  .sidebar-form {
+    width: 100%;
+    order: 2; /* Formulário abaixo da visualização no mobile */
+    box-shadow: none;
+    border-top: 1px solid var(--border-color);
+  }
+  .preview-area {
+    order: 1; /* Visualizador acima do form no mobile */
+    padding: 20px;
+  }
+  .preview-header {
+    position: static;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  .preview-header .btn-primary {
+    width: 100%;
+    font-size: 18px;
+    padding: 16px;
+  }
+  
+  /* Escalar o PDF para caber na tela do celular (somente visual) */
+  .a4-wrapper {
+    padding: 0;
+    transform: scale(0.4); /* Escala provisória para mobile */
+    transform-origin: top center;
+    margin-bottom: -60%; /* Ajuste de altura após escala */
+  }
+}
+
+@media (max-width: 600px) {
+  .a4-wrapper {
+    transform: scale(0.35);
+    margin-bottom: -70%;
+  }
+}
