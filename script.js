@@ -175,8 +175,8 @@ function generatePDF() {
     margin:       0,
     filename:     `Orcamento_${document.getElementById('inputClient').value.trim().replace(/\s+/g,'_')}.pdf`,
     image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, useCORS: true, allowTaint: true, letterRendering: true, scrollY: 0 },
-    jsPDF:        { unit: 'px', format: [794, 1123], orientation: 'portrait' },
+    html2canvas:  { scale: 2, useCORS: true, windowWidth: 794, width: 794, scrollY: 0, scrollX: 0 },
+    jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
     pagebreak:    { mode: ['css', 'legacy'], avoid: 'tr' }
   };
 

@@ -82,14 +82,9 @@
       <div class="a4-wrapper">
         <div class="a4-page" id="pdfDocument">
           
-          <!-- Grafismo Topo (Cores sólidas p/ consistência em Mobile e Desktop no PDF sem bugs de opacidade/fundo preto) -->
+          <!-- Grafismo Topo (Cores Sólidas Base64 p/ html2canvas processar 100% igual e não corromper fundo como blocos gigantes marrons no iOS/Android) -->
           <div class="waves-top">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" preserveAspectRatio="none" style="width: 100%; height: 100%; display: block;">
-              <path d="M800,0 C700,50 650,40 500,80 C300,140 100,50 0,90 L0,0 Z" fill="#EEECEB" />
-              <path d="M0,100 Q200,40 400,90 T800,70 L800,0 L0,0 Z" fill="#B79A84" />
-              <path d="M0,0 L800,0 L800,30 Q400,80 0,60 Z" fill="#F8F8F8" />
-              <path d="M0,80 Q200,10 400,60 T800,40 L800,0 L0,0 Z" fill="#D0B7A2" />
-            </svg>
+            <img style="width: 100%; height: 100%; display: block;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMjAwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48cGF0aCBkPSJNODEwLDAgQzY5OSw1MCA2NTAsNDAgNTAwLDgwIEMzMDAsMTQwIDEwMCw1MCAwLDkwIEwwLDAgWiIgZmlsbD0iI0VFRUNFQiIvPjxwYXRoIGQ9Ik0wLDEwMCBRMjAwLDQwIDQwMCw5MCBUODAwLDcwIEw4MDAsMCBMMCwwIFoiIGZpbGw9IiNCNzlBODQiLz48cGF0aCBkPSJNMDAwLDAgTDgwMCwwIEw4MDAsMzAgUTQwMCw4MCAwLDYwIFoiIGZpbGw9IiNGOEY4RjgiLz48cGF0aCBkPSJNMDAwLDgwIFEyMDAsMTAgNDAwLDYwIFQ4MDAsNDAgTDgwMCwwIEwwLDAgWiIgZmlsbD0iI0QwQjdBMiIvPjwvc3ZnPg==" alt=""/>
           </div>
 
           <div class="invoice-content">
@@ -166,13 +161,9 @@
             </div>
           </div>
 
-          <!-- Grafismo Base (Cores sólidas para consistência e eliminação do bug de opacidade no PDF) -->
+          <!-- Grafismo Base (Cores Sólidas p/ processamento seguro com img s/ opc em HTML2Canvas) -->
           <div class="waves-bottom">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 150" preserveAspectRatio="none" style="width: 100%; height: 100%; display: block;">
-              <path d="M0,110 C300,30 500,140 800,90 L800,150 L0,150 Z" fill="#EEECEB" />
-              <path d="M0,80 Q200,30 400,100 T800,50 L800,150 L0,150 Z" fill="#B79A84" />
-              <path d="M0,50 Q200,10 400,60 T800,40 L800,150 L0,150 Z" fill="#D0B7A2" />
-            </svg>
+            <img style="width: 100%; height: 100%; display: block;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgMTUwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48cGF0aCBkPSJNMDAwLDExMCBDMzAwLDMwIDUwMCwxNDAgODAwLDkwIEw4MDAsMTUwIEwwLDE1MCBaIiBmaWxsPSIjRUVFQ0VCIi8+PHBhdGggZD0iTTAwMCw4MCBRMjAwLDMwIDQwMCwxMDAgVDgwMCw1MCBMODAwLDE1MCBMMCwxNTAgWiIgZmlsbD0iI0I3OUE4NCIvPjxwYXRoIGQ9Ik0wMDAsNTAgUTIwMCwxMCA0MDAsNjAgVDgwMCw0MCBMODAwLDE1MCBMMCwxNTAgWiIgZmlsbD0iI0QwQjdBMiIvPjwvc3ZnPg==" alt=""/>
           </div>
 
         </div>
