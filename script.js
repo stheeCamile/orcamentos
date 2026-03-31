@@ -165,42 +165,44 @@ function generatePDF() {
 
   const element = document.getElementById('pdfDocument');
   
-  // Forçar largura exata para evitar que iOS/Mobile engula um pedaço do PDF e cause distorção
-  element.style.width = '794px';
-  element.style.minWidth = '794px';
-  element.style.maxWidth = '794px';
+  // Criar clone do elemento para que o html2pdf renderize sem ser afetado por limites de tela do celular
+  const clone = element.cloneNode(true);
+  
+  // Div temporária flutuando no body
+  const tempWrapper = document.createElement('div');
+  tempWrapper.style.position = 'absolute';
+  tempWrapper.style.top = '0';
+  tempWrapper.style.left = '-9999px'; // Fora da visão do usuário, mas capturável pelo html2canvas
+  tempWrapper.style.width = '794px';
+  tempWrapper.style.minWidth = '794px';
+  tempWrapper.style.maxWidth = '794px';
+  tempWrapper.style.margin = '0';
+  tempWrapper.style.padding = '0';
+  tempWrapper.style.background = '#ffffff';
 
-  // Opções de alta fidelidade
+  tempWrapper.appendChild(clone);
+  document.body.appendChild(tempWrapper);
+
   const opt = {
     margin:       0,
     filename:     `Orcamento_${document.getElementById('inputClient').value.trim().replace(/\s+/g,'_')}.pdf`,
     image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, useCORS: true, windowWidth: 794, width: 794, scrollY: 0, scrollX: 0 },
+    html2canvas:  { scale: 2, useCORS: true, windowWidth: 794, width: 794 },
     jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
     pagebreak:    { mode: ['css', 'legacy'], avoid: 'tr' }
   };
 
-  // Remover escala do mobile temporariamente para não "esmagar" a renderização do PDF
-  const wrapper = document.querySelector('.a4-wrapper');
-  const oldTransform = wrapper.style.transform;
-  const oldMargin = wrapper.style.marginBottom;
-  wrapper.style.transform = 'none';
-  wrapper.style.marginBottom = '0';
-
-  html2pdf().set(opt).from(element).save().then(() => {
-    // Restaurar escala
-    wrapper.style.transform = oldTransform;
-    wrapper.style.marginBottom = oldMargin;
-
+  html2pdf().set(opt).from(tempWrapper).save().then(() => {
+    document.body.removeChild(tempWrapper);
+    
     btn.innerHTML = `
       <svg style="width: 18px; fill: white; margin-right: 8px;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
       BAIXAR PDF (Pronto para enviar)
     `;
     btn.disabled = false;
   }).catch(e => {
-    alert("Ocorreu um erro ao baixar: É possível que a logo.png esteja bloqueada (Segurança do Navegador). Hospede o site no GitHub Pages ou remova a imagem para testar.");
-    wrapper.style.transform = oldTransform;
-    wrapper.style.marginBottom = oldMargin;
+    document.body.removeChild(tempWrapper);
+    alert("Ocorreu um erro ao baixar. Tente usar Chrome ou Safari (se não estiver funcionando no atual).");
     btn.innerHTML = 'BAIXAR PDF (Pronto para enviar)';
     btn.disabled = false;
     console.error(e);
